@@ -4,7 +4,8 @@ A Concourse resource to manage a npm package.
 
 ## Source Configuration
 
-This resource uses either authentication type for login
+This resource uses either authentication type for login  
+
 **By Token**
 
 * `token`: *Required.* npm registry token.
