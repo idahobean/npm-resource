@@ -1,0 +1,45 @@
+#!/bin/bash
+# vim: set ft=sh
+
+set -eu
+
+export GOPATH=$PWD/gopath
+export PATH=$GOPATH/bin:$PATH
+
+BUILD_DIR=$PWD/built-resource
+
+# run tests
+(
+    set -e
+
+    cd $GOPATH/src/github.com/idahobean/npm-resource
+
+    export GOPATH=${PWD}/Godeps/_workspace:$GOPATH
+    export PATH=${PWD}/Godeps/_workspace/bin:$PATH
+
+    go install github.com/onsi/ginkgo/ginkgo
+
+    CGO_ENABLED=1 ginkgo -race -r -p "$@"
+)
+
+# build binaries
+(
+    set -e
+
+    cd $GOPATH/src/github.com/idahobean/npm-resource
+
+    export GOPATH=${PWD}/Godeps/_workspace:$GOPATH
+    export PATH=${PWD}/Godeps/_workspace/bin:$PATH
+
+    go build -o $BUILD_DIR/built-out ./out/cmd/out
+    go build -o $BUILD_DIR/built-check ./check/cmd/check
+    go build -o $BUILD_DIR/built-in ./in/cmd/in
+)
+
+(
+    set -e
+
+    cd $GOPATH/src/github.com/idahobean/npm-resource
+
+    cp Dockerfile $BUILD_DIR
+)
