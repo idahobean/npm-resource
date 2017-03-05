@@ -19,7 +19,7 @@ func main() {
 	}
 
 	var err error
-	if requset.Srouce.PackageName == "" {
+	if requset.Source.PackageName == "" {
 		err = errors.New("package name")
 	}
 	if err != nil {
