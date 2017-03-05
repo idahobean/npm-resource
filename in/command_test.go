@@ -28,7 +28,6 @@ var _ = Describe("In Command", func() {
 				PackageName: "foo",
 				Registry: "http://my.private.registry/",
 			},
-			Params: in.Params{},
 		}
 	})
 
