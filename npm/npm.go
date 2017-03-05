@@ -44,7 +44,7 @@ func (npm *NPM) Version(version string) error {
 }
 
 func (npm *NPM) Publish(path string, tag string, registry string) error {
-	args := []string{ path }
+	args := []string{ args, "publish", path }
 
 	if tag != "" {
 		args = append(args, "--tag", tag)
