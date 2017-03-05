@@ -24,7 +24,7 @@ var _ = Describe("In Command", func() {
 
 		request = in.Request{
 			Source: resource.Source{
-				Token: "//localhost:4873:_authToken=test",
+				Token: "test",
 				PackageName: "foo",
 				Registry: "http://my.private.registry/",
 			},
@@ -37,7 +37,7 @@ var _ = Describe("In Command", func() {
 			Ω(err).ShouldNot(HaveOccurred())
 
 			Ω(response.Version.Version).Should(Equal("0.0.1"))
-			Ω(reqponse.Metadata[0]).Should(Equal(
+			Ω(response.Metadata[0]).Should(Equal(
 				resource.MetadataPair{
 					Name: "name",
 					Value: "foo-package",

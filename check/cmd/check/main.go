@@ -18,13 +18,21 @@ func main() {
 		fatal("reading request from stdin", err)
 	}
 
+	var err error
+	if requset.Source.PackageName == "" {
+		err = errors.New("package name")
+	}
+	if err != nil {
+		fatal("parameter required", err)
+	}
+
 	response, err := command.Run(request)
 	if err != nil {
 		fatal("running command", err)
 	}
 
 	if err := json.NewEncoder(os.Stdout).Encode(response); err != nil {
-		fatal("writing response", err)
+		fatal("writing response to stdout", err)
 	}
 }
 
