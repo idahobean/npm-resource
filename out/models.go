@@ -1,4 +1,4 @@
-package in
+package out
 
 import "github.com/idahobean/npm-resource"
 
