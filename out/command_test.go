@@ -9,18 +9,18 @@ import (
 
 	"github.com/idahobean/npm-resource"
 	"github.com/idahobean/npm-resource/out"
-	"github.com/idahobean/npm-resource/fakes"
+	"github.com/idahobean/npm-resource/fakenpm"
 )
 
 var _ = Describe("Out Command", func() {
 	var (
-		NPM *fakes.FakeNPM
+		NPM *fakenpm.FakeNPM
 		request out.Request
 		command *out.Command
 	)
 
 	BeforeEach(func() {
-		NPM = &fakes.FakeNPM{}
+		NPM = &fakenpm.FakeNPM{}
 		command = out.NewCommand(NPM)
 
 		request = out.Request{

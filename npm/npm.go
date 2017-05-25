@@ -6,7 +6,7 @@ import (
 )
 
 type PackageManager interface {
-	View(packageName string, registry string) error
+	View(packageName string, registry string) ([]byte, error)
 	Install(packageName string, registry string) error
 	Version(version string) error
 	Publish(path string, tag string, registry string) error
@@ -18,7 +18,7 @@ func NewNPM() *NPM {
 	return &NPM {}
 }
 
-func (npm *NPM) View(packageName string, registry string) error {
+func (npm *NPM) View(packageName string, registry string) ([]byte, error) {
 	args := []string{ "view", packageName }
 
 	if registry != "" {
