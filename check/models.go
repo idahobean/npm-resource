@@ -1,4 +1,4 @@
-package in
+package check
 
 import "github.com/idahobean/npm-resource"
 
