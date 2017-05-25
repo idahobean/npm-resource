@@ -19,7 +19,7 @@ func NewNPM() *NPM {
 }
 
 func (npm *NPM) View(packageName string, registry string) error {
-	args := []string{ args, "view", packageName }
+	args := []string{ "view", packageName }
 
 	if registry != "" {
 		args = append(args, "--registry", registry)
@@ -29,7 +29,7 @@ func (npm *NPM) View(packageName string, registry string) error {
 }
 
 func (npm *NPM) Install(packageName string, registry string) error {
-	args := []string{ args, "install", packageName }
+	args := []string{ "install", packageName }
 
 	if registry != "" {
 		args = append(args, "--registry", registry)
@@ -44,7 +44,7 @@ func (npm *NPM) Version(version string) error {
 }
 
 func (npm *NPM) Publish(path string, tag string, registry string) error {
-	args := []string{ args, "publish", path }
+	args := []string{ "publish", path }
 
 	if tag != "" {
 		args = append(args, "--tag", tag)

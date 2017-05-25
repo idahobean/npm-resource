@@ -3,6 +3,7 @@ package check
 import (
 	"encoding/json"
 	"github.com/idahobean/npm-resource"
+	"github.com/idahobean/npm-resource/npm"
 )
 
 type Command struct {
