@@ -8,18 +8,18 @@ import (
 
 	"github.com/idahobean/npm-resource"
 	"github.com/idahobean/npm-resource/in"
-	"github.com/idahobean/npm-resource/npmfakes"
+	"github.com/idahobean/npm-resource/fakes"
 )
 
 var _ = Describe("In Command", func() {
 	var (
-		NPM *npmfakes.FakeNPM
+		NPM *fakes.FakeNPM
 		request in.Request
 		command *in.Command
 	)
 
 	BeforeEach(func() {
-		NPM = &npmfakes.FakeNPM{}
+		NPM = &fakes.FakeNPM{}
 		command = in.NewCommand(NPM)
 
 		request = in.Request{
