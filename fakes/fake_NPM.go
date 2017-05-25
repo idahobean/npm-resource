@@ -4,7 +4,7 @@ package fakes
 import (
 	"sync"
 
-	"github.com/idahobean/npm-resource"
+	"github.com/idahobean/npm-resource/npm"
 )
 
 type FakePackageManager struct {
