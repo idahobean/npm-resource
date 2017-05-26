@@ -14,8 +14,8 @@ BUILD_DIR=$PWD/built-resource
 
     cd $GOPATH/src/github.com/idahobean/npm-resource
 
-    export GOPATH=${PWD}/Godeps/_workspace:$GOPATH
-    export PATH=${PWD}/Godeps/_workspace/bin:$PATH
+    export GOPATH=${PWD}/vendor:$GOPATH
+    export PATH=${PWD}/vendor/bin:$PATH
 
     go install github.com/onsi/ginkgo/ginkgo
 
@@ -28,8 +28,8 @@ BUILD_DIR=$PWD/built-resource
 
     cd $GOPATH/src/github.com/idahobean/npm-resource
 
-    export GOPATH=${PWD}/Godeps/_workspace:$GOPATH
-    export PATH=${PWD}/Godeps/_workspace/bin:$PATH
+    export GOPATH=${PWD}/vendor:$GOPATH
+    export PATH=${PWD}/vendor/bin:$PATH
 
     go build -o $BUILD_DIR/built-out ./out/cmd/out
     go build -o $BUILD_DIR/built-check ./check/cmd/check
