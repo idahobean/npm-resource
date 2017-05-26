@@ -14,10 +14,7 @@ BUILD_DIR=$PWD/built-resource
 
     cd $GOPATH/src/github.com/idahobean/npm-resource
 
-    export GOPATH=${PWD}/vendor:$GOPATH
-    export PATH=${PWD}/vendor/bin:$PATH
-
-    go install github.com/onsi/ginkgo/ginkgo
+    go install github.com/idahobean/npm-resource/vendor/github.com/onsi/ginkgo/ginkgo
 
     CGO_ENABLED=1 ginkgo -race -r -p "$@"
 )
