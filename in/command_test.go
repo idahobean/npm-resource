@@ -8,7 +8,7 @@ import (
 
 	"github.com/idahobean/npm-resource"
 	"github.com/idahobean/npm-resource/in"
-	"github.com/idahobean/npm-resource/fakes"
+	"github.com/idahobean/npm-resource/npm/fakes"
 )
 
 var _ = Describe("In Command", func() {

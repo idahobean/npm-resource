@@ -8,7 +8,8 @@ import (
 
 	"github.com/idahobean/npm-resource"
 	"github.com/idahobean/npm-resource/check"
-	"github.com/idahobean/npm-resource/fakes"
+	"github.com/idahobean/npm-resource/npm"
+	"github.com/idahobean/npm-resource/npm/fakes"
 )
 
 var _ = Describe("Check Command", func() {
@@ -28,7 +29,6 @@ var _ = Describe("Check Command", func() {
 				PackageName: "foo",
 				Registry: "http://my.private.registry/",
 			},
-			Params: check.Params{},
 		}
 	})
 
@@ -62,13 +62,14 @@ var _ = Describe("Check Command", func() {
 
 		Describe("handling any errors", func() {
 			var expectedError error
+			var expectedReturn *npm.Info
 
 			BeforeEach(func() {
 				expectedError = errors.New("it all went wrong")
 			})
 
 			It("from view package", func() {
-				NPM.ViewReturns(expectedError)
+				NPM.ViewReturns(expectedReturn, expectedError)
 
 				_, err := command.Run(request)
 				Ω(err).Should(MatchError(expectedError))

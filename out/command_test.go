@@ -3,13 +3,14 @@ package out_test
 import (
 	"errors"
 	"path/filepath"
+	"os"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
 	"github.com/idahobean/npm-resource"
 	"github.com/idahobean/npm-resource/out"
-	"github.com/idahobean/npm-resource/fakes"
+	"github.com/idahobean/npm-resource/npm/fakes"
 )
 
 var _ = Describe("Out Command", func() {
@@ -33,7 +34,7 @@ var _ = Describe("Out Command", func() {
 				Path: "bar/baz",
 				Version: "0.0.2",
 				Tag: "fox",
-			}
+			},
 		}
 	})
 
@@ -63,11 +64,11 @@ var _ = Describe("Out Command", func() {
 
 			basePath, err := filepath.Abs(filepath.Dir(os.Args[0]))
 			if err != nil {
-				return Response{}, err
+				return
 			}
 
 			Ω(path).Should(Equal(filepath.Join(basePath, "bar/baz")))
-			Ω(tag).Should(Equal("fox")
+			Ω(tag).Should(Equal("fox"))
 			Ω(registry).Should(Equal("http://my.private.registry/"))
 
 		})

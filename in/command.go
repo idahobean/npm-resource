@@ -1,8 +1,8 @@
 package in
 
 import (
-	"encoding/json"
 	"github.com/idahobean/npm-resource"
+	. "github.com/idahobean/npm-resource/npm"
 )
 
 type Command struct {
@@ -11,7 +11,7 @@ type Command struct {
 
 func NewCommand(packageManager PackageManager) *Command {
 	return &Command {
-		packageManager: PackageManager,
+		packageManager: packageManager,
 	}
 }
 
@@ -31,21 +31,19 @@ func (command *Command) Run(request Request) (Response, error) {
 	if err != nil {
 		return Response{}, err
 	}
-	var packageInfo interface{}
-	err := json.Unmarshal(out, &packageInfo)
 
 	return Response {
 		Version: resource.Version {
-			Version: out.version
+			Version: out.Version,
 		},
 		Metadata: []resource.MetadataPair {
 			{
 				Name: "name",
-				Value: out.name,
-			}
+				Value: out.Name,
+			},
 			{
 				Name: "homepage",
-				Value: out.homepage,
+				Value: out.Homepage,
 			},
 		},
 	}, nil
