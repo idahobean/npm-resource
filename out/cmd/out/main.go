@@ -1,11 +1,11 @@
 package main
 
 import (
+	"errors"
 	"encoding/json"
 	"fmt"
 	"os"
 
-	"github.com/idahobean/npm-resource"
 	"github.com/idahobean/npm-resource/out"
 )
 
