@@ -8,18 +8,18 @@ import (
 )
 
 type FakeNPM struct {
-	ViewStub        func(packageName string, registry string) (*npm.Info, error)
+	ViewStub        func(packageName string, registry string) (*npm.PackageInfo, error)
 	viewMutex       sync.RWMutex
 	viewArgsForCall []struct {
 		packageName string
 		registry    string
 	}
 	viewReturns struct {
-		result1 *npm.Info
+		result1 *npm.PackageInfo
 		result2 error
 	}
 	viewReturnsOnCall map[int]struct {
-		result1 *npm.Info
+		result1 *npm.PackageInfo
 		result2 error
 	}
 	InstallStub        func(packageName string, registry string) error
@@ -62,7 +62,7 @@ type FakeNPM struct {
 	invocationsMutex sync.RWMutex
 }
 
-func (fake *FakeNPM) View(packageName string, registry string) (*npm.Info, error) {
+func (fake *FakeNPM) View(packageName string, registry string) (*npm.PackageInfo, error) {
 	fake.viewMutex.Lock()
 	ret, specificReturn := fake.viewReturnsOnCall[len(fake.viewArgsForCall)]
 	fake.viewArgsForCall = append(fake.viewArgsForCall, struct {
@@ -92,24 +92,24 @@ func (fake *FakeNPM) ViewArgsForCall(i int) (string, string) {
 	return fake.viewArgsForCall[i].packageName, fake.viewArgsForCall[i].registry
 }
 
-func (fake *FakeNPM) ViewReturns(result1 *npm.Info, result2 error) {
+func (fake *FakeNPM) ViewReturns(result1 *npm.PackageInfo, result2 error) {
 	fake.ViewStub = nil
 	fake.viewReturns = struct {
-		result1 *npm.Info
+		result1 *npm.PackageInfo
 		result2 error
 	}{result1, result2}
 }
 
-func (fake *FakeNPM) ViewReturnsOnCall(i int, result1 *npm.Info, result2 error) {
+func (fake *FakeNPM) ViewReturnsOnCall(i int, result1 *npm.PackageInfo, result2 error) {
 	fake.ViewStub = nil
 	if fake.viewReturnsOnCall == nil {
 		fake.viewReturnsOnCall = make(map[int]struct {
-			result1 *npm.Info
+			result1 *npm.PackageInfo
 			result2 error
 		})
 	}
 	fake.viewReturnsOnCall[i] = struct {
-		result1 *npm.Info
+		result1 *npm.PackageInfo
 		result2 error
 	}{result1, result2}
 }

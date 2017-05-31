@@ -14,9 +14,10 @@ import (
 
 var _ = Describe("Check Command", func() {
 	var (
-		NPM *fakes.FakeNPM
-		request check.Request
-		command *check.Command
+		NPM          *fakes.FakeNPM
+		request      check.Request
+		command      *check.Command
+		returnedInfo *npm.PackageInfo
 	)
 
 	BeforeEach(func() {
@@ -25,14 +26,28 @@ var _ = Describe("Check Command", func() {
 
 		request = check.Request{
 			Source: resource.Source{
-				Token: "test",
+				Token:       "test",
 				PackageName: "foo",
-				Registry: "http://my.private.registry/",
+				Registry:    "http://my.private.registry/",
 			},
 		}
+
+		returnedInfo = &npm.PackageInfo{}
+	})
+
+	JustBeforeEach(func() {
+		NPM.ViewReturns(returnedInfo, nil)
 	})
 
 	Describe("running the command", func() {
+		BeforeEach(func() {
+			returnedInfo = &npm.PackageInfo{
+				Name:     "foo-package",
+				Version:  "0.0.1",
+				Homepage: "http://foobar.com",
+			}
+		})
+
 		It("views package", func() {
 			response, err := command.Run(request)
 			Ω(err).ShouldNot(HaveOccurred())
@@ -40,14 +55,14 @@ var _ = Describe("Check Command", func() {
 			Ω(response.Version.Version).Should(Equal("0.0.1"))
 			Ω(response.Metadata[0]).Should(Equal(
 				resource.MetadataPair{
-					Name: "name",
+					Name:  "name",
 					Value: "foo-package",
 				},
 			))
 			Ω(response.Metadata[1]).Should(Equal(
 				resource.MetadataPair{
-					Name: "homepage",
-					Value: "foobars page",
+					Name:  "homepage",
+					Value: "http://foobar.com",
 				},
 			))
 
@@ -62,7 +77,7 @@ var _ = Describe("Check Command", func() {
 
 		Describe("handling any errors", func() {
 			var expectedError error
-			var expectedReturn *npm.Info
+			var expectedReturn *npm.PackageInfo
 
 			BeforeEach(func() {
 				expectedError = errors.New("it all went wrong")

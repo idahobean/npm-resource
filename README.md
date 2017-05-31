@@ -30,7 +30,7 @@ When both are listed, `token` is used.
 
 Checks for new versions of specified `package_name` from `registry`.
 
-### `in`: Install npm pachage from registry.
+### `in`: Install npm package from registry.
 
 #### Parameters
 

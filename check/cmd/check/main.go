@@ -2,19 +2,21 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"os"
 
-	"github.com/idahobean/npm-resource"
 	"github.com/idahobean/npm-resource/check"
+	"github.com/idahobean/npm-resource/npm"
 )
 
 func main() {
 
 	NPM := check.NewNPM()
+	command := check.NewCommand(NPM)
 
 	var request check.Request
-	if err := json.NewDecored(os.Stdin).Decode(&request); err != nil {
+	if err := json.NewDecoder(os.Stdin).Decode(&request); err != nil {
 		fatal("reading request from stdin", err)
 	}
 

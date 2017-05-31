@@ -3,8 +3,7 @@
 	"GoVersion": "go1.8",
 	"GodepVersion": "v79",
 	"Packages": [
-		"./...",
-		"github.com/onsi/ginkgo/ginkgo"
+		"./..."
 	],
 	"Deps": [
 		{
@@ -144,6 +143,16 @@
 		},
 		{
 			"ImportPath": "github.com/onsi/gomega/format",
+			"Comment": "v1.1.0-8-g00acfa9",
+			"Rev": "00acfa9d92a386415bd235ab069c52063f925998"
+		},
+		{
+			"ImportPath": "github.com/onsi/gomega/gbytes",
+			"Comment": "v1.1.0-8-g00acfa9",
+			"Rev": "00acfa9d92a386415bd235ab069c52063f925998"
+		},
+		{
+			"ImportPath": "github.com/onsi/gomega/gexec",
 			"Comment": "v1.1.0-8-g00acfa9",
 			"Rev": "00acfa9d92a386415bd235ab069c52063f925998"
 		},

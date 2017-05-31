@@ -2,22 +2,24 @@ package out_test
 
 import (
 	"errors"
-	"path/filepath"
 	"os"
+	"path/filepath"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
 	"github.com/idahobean/npm-resource"
-	"github.com/idahobean/npm-resource/out"
+	"github.com/idahobean/npm-resource/npm"
 	"github.com/idahobean/npm-resource/npm/fakes"
+	"github.com/idahobean/npm-resource/out"
 )
 
 var _ = Describe("Out Command", func() {
 	var (
-		NPM *fakes.FakeNPM
-		request out.Request
-		command *out.Command
+		NPM          *fakes.FakeNPM
+		request      out.Request
+		command      *out.Command
+		returnedInfo *npm.PackageInfo
 	)
 
 	BeforeEach(func() {
@@ -26,19 +28,33 @@ var _ = Describe("Out Command", func() {
 
 		request = out.Request{
 			Source: resource.Source{
-				Token: "test",
-				PackageName: "foo",
-				Registry: "http://my.private.registry/",
+				Token:       "test",
+				PackageName: "foo-package",
+				Registry:    "http://my.private.registry/",
 			},
 			Params: out.Params{
-				Path: "bar/baz",
+				Path:    "bar/baz",
 				Version: "0.0.2",
-				Tag: "fox",
+				Tag:     "fox",
 			},
 		}
+
+		returnedInfo = &npm.PackageInfo{}
+	})
+
+	JustBeforeEach(func() {
+		NPM.ViewReturns(returnedInfo, nil)
 	})
 
 	Describe("running the command", func() {
+		BeforeEach(func() {
+			returnedInfo = &npm.PackageInfo{
+				Name:     "foo-package",
+				Version:  "0.0.1",
+				Homepage: "http://foobar.com",
+			}
+		})
+
 		It("publishes package", func() {
 			response, err := command.Run(request)
 			Ω(err).ShouldNot(HaveOccurred())
@@ -46,14 +62,14 @@ var _ = Describe("Out Command", func() {
 			Ω(response.Version.Version).Should(Equal("0.0.1"))
 			Ω(response.Metadata[0]).Should(Equal(
 				resource.MetadataPair{
-					Name: "name",
+					Name:  "name",
 					Value: "foo-package",
 				},
 			))
 			Ω(response.Metadata[1]).Should(Equal(
 				resource.MetadataPair{
-					Name: "homepage",
-					Value: "foobars page",
+					Name:  "homepage",
+					Value: "http://foobar.com",
 				},
 			))
 
@@ -73,7 +89,7 @@ var _ = Describe("Out Command", func() {
 
 		})
 
-// TODO other test patterns
+		// TODO other test patterns?
 
 		Describe("handling any errors", func() {
 			var expectedError error

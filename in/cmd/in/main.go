@@ -2,11 +2,12 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"os"
 
-	"github.com/idahobean/npm-resource"
 	"github.com/idahobean/npm-resource/in"
+	"github.com/idahobean/npm-resource/npm"
 )
 
 func main() {
@@ -19,13 +20,13 @@ func main() {
 		fatal("reading request from stdin", err)
 	}
 
-        var err error
-        if requset.Source.PackageName == "" {
-                err = errors.New("package name")
-        }
-        if err != nil {
-                fatal("parameter required", err)
-        }
+	var err error
+	if requset.Source.PackageName == "" {
+		err = errors.New("package name")
+	}
+	if err != nil {
+		fatal("parameter required", err)
+	}
 
 	response, err := command.Run(request)
 	if err != nil {

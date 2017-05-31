@@ -8,20 +8,20 @@ import (
 )
 
 type PackageManager interface {
-	View(packageName string, registry string) (*Info, error)
+	View(packageName string, registry string) (*PackageInfo, error)
 	Install(packageName string, registry string) error
 	Version(version string) error
 	Publish(path string, tag string, registry string) error
 }
 
-type NPM struct {}
+type NPM struct{}
 
 func NewNPM() *NPM {
-	return &NPM {}
+	return &NPM{}
 }
 
-func (npm *NPM) View(packageName string, registry string) (*Info, error) {
-	args := []string{ "view", packageName }
+func (npm *NPM) View(packageName string, registry string) (*PackageInfo, error) {
+	args := []string{"view", packageName}
 
 	if registry != "" {
 		args = append(args, "--registry", registry)
@@ -29,15 +29,15 @@ func (npm *NPM) View(packageName string, registry string) (*Info, error) {
 
 	out, err := npm.npm(args...).Output()
 	if err != nil {
-		return &Info{}, err
+		return &PackageInfo{}, err
 	}
 
 	js, err := simpleJson.NewJson([]byte(out))
 	if err != nil {
-		return &Info{}, err
+		return &PackageInfo{}, err
 	}
 
-	var info Info
+	var info PackageInfo
 	info.Name, err = js.Get("name").String()
 	info.Version, err = js.Get("version").String()
 	info.Homepage, err = js.Get("homepage").String()
@@ -46,7 +46,7 @@ func (npm *NPM) View(packageName string, registry string) (*Info, error) {
 }
 
 func (npm *NPM) Install(packageName string, registry string) error {
-	args := []string{ "install", packageName }
+	args := []string{"install", packageName}
 
 	if registry != "" {
 		args = append(args, "--registry", registry)
@@ -56,12 +56,12 @@ func (npm *NPM) Install(packageName string, registry string) error {
 }
 
 func (npm *NPM) Version(version string) error {
-	args := []string{ "version", version }
+	args := []string{"version", version}
 	return npm.npm(args...).Run()
 }
 
 func (npm *NPM) Publish(path string, tag string, registry string) error {
-	args := []string{ "publish", path }
+	args := []string{"publish", path}
 
 	if tag != "" {
 		args = append(args, "--tag", tag)

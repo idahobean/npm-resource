@@ -8,14 +8,16 @@ import (
 
 	"github.com/idahobean/npm-resource"
 	"github.com/idahobean/npm-resource/in"
+	"github.com/idahobean/npm-resource/npm"
 	"github.com/idahobean/npm-resource/npm/fakes"
 )
 
 var _ = Describe("In Command", func() {
 	var (
-		NPM *fakes.FakeNPM
-		request in.Request
-		command *in.Command
+		NPM          *fakes.FakeNPM
+		request      in.Request
+		command      *in.Command
+		returnedInfo *npm.PackageInfo
 	)
 
 	BeforeEach(func() {
@@ -24,14 +26,28 @@ var _ = Describe("In Command", func() {
 
 		request = in.Request{
 			Source: resource.Source{
-				Token: "test",
-				PackageName: "foo",
-				Registry: "http://my.private.registry/",
+				Token:       "test",
+				PackageName: "foo-package",
+				Registry:    "http://my.private.registry/",
 			},
 		}
+
+		returnedInfo = &npm.PackageInfo{}
+	})
+
+	JustBeforeEach(func() {
+		NPM.ViewReturns(returnedInfo, nil)
 	})
 
 	Describe("running the command", func() {
+		BeforeEach(func() {
+			returnedInfo = &npm.PackageInfo{
+				Name:     "foo-package",
+				Version:  "0.0.1",
+				Homepage: "http://foobar.com",
+			}
+		})
+
 		It("pulls package", func() {
 			response, err := command.Run(request)
 			Ω(err).ShouldNot(HaveOccurred())
@@ -39,14 +55,14 @@ var _ = Describe("In Command", func() {
 			Ω(response.Version.Version).Should(Equal("0.0.1"))
 			Ω(response.Metadata[0]).Should(Equal(
 				resource.MetadataPair{
-					Name: "name",
+					Name:  "name",
 					Value: "foo-package",
 				},
 			))
 			Ω(response.Metadata[1]).Should(Equal(
 				resource.MetadataPair{
-					Name: "homepage",
-					Value: "foobars page",
+					Name:  "homepage",
+					Value: "http://foobar.com",
 				},
 			))
 

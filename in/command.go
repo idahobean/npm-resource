@@ -2,15 +2,15 @@ package in
 
 import (
 	"github.com/idahobean/npm-resource"
-	. "github.com/idahobean/npm-resource/npm"
+	"github.com/idahobean/npm-resource/npm"
 )
 
 type Command struct {
-	packageManager PackageManager
+	packageManager npm.PackageManager
 }
 
-func NewCommand(packageManager PackageManager) *Command {
-	return &Command {
+func NewCommand(packageManager npm.PackageManager) *Command {
+	return &Command{
 		packageManager: packageManager,
 	}
 }
@@ -32,17 +32,17 @@ func (command *Command) Run(request Request) (Response, error) {
 		return Response{}, err
 	}
 
-	return Response {
-		Version: resource.Version {
+	return Response{
+		Version: resource.Version{
 			Version: out.Version,
 		},
-		Metadata: []resource.MetadataPair {
+		Metadata: []resource.MetadataPair{
 			{
-				Name: "name",
+				Name:  "name",
 				Value: out.Name,
 			},
 			{
-				Name: "homepage",
+				Name:  "homepage",
 				Value: out.Homepage,
 			},
 		},
