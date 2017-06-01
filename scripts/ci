@@ -1,8 +1,6 @@
 #!/bin/bash
 # vim: set ft=sh
 
-set -eu
-
 export GOPATH=$PWD/gopath
 export PATH=$GOPATH/bin:$PATH
 
