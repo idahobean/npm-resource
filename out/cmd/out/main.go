@@ -12,7 +12,7 @@ import (
 
 func main() {
 
-	NPM := out.NewNPM()
+	NPM := npm.NewNPM()
 	command := out.NewCommand(NPM)
 
 	var request out.Request

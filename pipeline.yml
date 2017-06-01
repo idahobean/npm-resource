@@ -5,9 +5,12 @@ jobs:
   - aggregate:
     - get: alpine-node-bash-image
       params: {save: true}
+    - get: sinopia2
+      params: {save: true}
     - get: npm-resource
       trigger: true
   - task: resource-unit
+    privileged: true
     file: npm-resource/build.yml
   - put: npm-resource-image
     params:
@@ -33,3 +36,8 @@ resources:
   type: docker-image
   source:
     repository: idahobean/alpine-node-bash
+
+- name: sinopia2
+  type: docker-image
+  source:
+    repository: idahobean/sinopia2

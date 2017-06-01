@@ -12,11 +12,23 @@ BUILD_DIR=$PWD/built-resource
 (
     set -e
 
+    source /docker-lib.sh
+    start_docker
+
+    docker load -i sinopia2/image
+    docker tag "$(cat sinopia2/image-id)" "$(cat sinopia2/repository):$(cat sinopia2/tag)"
+
+    docker images
+
     cd $GOPATH/src/github.com/idahobean/npm-resource
 
+    docker-compose -f scripts/docker-compose.yml up -d
     go install github.com/idahobean/npm-resource/vendor/github.com/onsi/ginkgo/ginkgo
 
     CGO_ENABLED=1 ginkgo -race -r -p "$@"
+
+    docker-compose -f scripts/docker-compose.yml down
+    docker volume rm $(docker volume ls -q)
 )
 
 # build binaries

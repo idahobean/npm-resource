@@ -12,7 +12,7 @@ import (
 
 func main() {
 
-	NPM := check.NewNPM()
+	NPM := npm.NewNPM()
 	command := check.NewCommand(NPM)
 
 	var request check.Request
@@ -21,7 +21,7 @@ func main() {
 	}
 
 	var err error
-	if requset.Source.PackageName == "" {
+	if request.Source.PackageName == "" {
 		err = errors.New("package name")
 	}
 	if err != nil {
