@@ -4,23 +4,6 @@ A Concourse resource to manage a npm package.
 
 ## Source Configuration
 
-This resource uses either authentication type for login  
-
-**By Token**
-
-* `token`: *Required.* npm registry token.
-```
-//localhost:4873/:_authToken=[fill the token parameter by this value]
-```
-
-**By Password** (not yet implemented)
-
-* `username`: npm registry username.
-* `password`: npm registry password.
-* `email`: user email for adduser.
-
-When both are listed, `token` is used.
-
 * `package_name`: *Required.* npm package name.
 * `registry`: *Optional.* npm registry url. (default is https://registry.npmjs.org/)
 
@@ -40,6 +23,9 @@ Checks for new versions of specified `package_name` from `registry`.
 
 #### Parameters
 
+* `username`: *Required.* npm registry login username.
+* `password`: *Required.* npm registry login password.
+* `email`: *Required.* npm registry login email.
 * `path`: *Required.* Path to the package to be published. (including `package.json`) 
 * `version`: *Optional.* [Version](https://docs.npmjs.com/cli/version) of the package to publish.
 * `tag`: *Optional.* package tag.

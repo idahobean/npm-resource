@@ -28,14 +28,16 @@ var _ = Describe("Out Command", func() {
 
 		request = out.Request{
 			Source: resource.Source{
-				Token:       "test",
 				PackageName: "foo-package",
 				Registry:    "http://my.private.registry/",
 			},
 			Params: out.Params{
-				Path:    "bar/baz",
-				Version: "0.0.2",
-				Tag:     "fox",
+				UserName: "aaa",
+				Password: "bbb",
+				Email:    "ccc@ddd.eee",
+				Path:     "bar/baz",
+				Version:  "0.0.2",
+				Tag:      "fox",
 			},
 		}
 
@@ -73,6 +75,16 @@ var _ = Describe("Out Command", func() {
 				},
 			))
 
+			By("npm-cli-login")
+			Ω(NPM.LoginCallCount()).Should(Equal(1))
+
+			username, password, email, registry := NPM.LoginArgsForCall(0)
+
+			Ω(username).Should(Equal("aaa"))
+			Ω(password).Should(Equal("bbb"))
+			Ω(email).Should(Equal("ccc@ddd.eee"))
+			Ω(registry).Should(Equal("http://my.private.registry/"))
+
 			By("npm publish")
 			Ω(NPM.PublishCallCount()).Should(Equal(1))
 
@@ -87,6 +99,13 @@ var _ = Describe("Out Command", func() {
 			Ω(tag).Should(Equal("fox"))
 			Ω(registry).Should(Equal("http://my.private.registry/"))
 
+			By("npm logout")
+			Ω(NPM.LogoutCallCount()).Should(Equal(1))
+
+			registry := NPM.LogoutArgsForCall(0)
+
+			Ω(registry).Should(Equal("http://my.private.registry/"))
+
 		})
 
 		// TODO other test patterns?
@@ -98,8 +117,22 @@ var _ = Describe("Out Command", func() {
 				expectedError = errors.New("it all went wrong")
 			})
 
+			It("from login", func() {
+				NPM.LoginReturns(expectedError)
+
+				_, err := command.Run(request)
+				Ω(err).Should(MatchError(expectedError))
+			})
+
 			It("from publish package", func() {
 				NPM.PublishReturns(expectedError)
+
+				_, err := command.Run(request)
+				Ω(err).Should(MatchError(expectedError))
+			})
+
+			It("from logout", func() {
+				NPM.LogoutReturns(expectedError)
 
 				_, err := command.Run(request)
 				Ω(err).Should(MatchError(expectedError))

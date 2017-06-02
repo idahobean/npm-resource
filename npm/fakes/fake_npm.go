@@ -8,6 +8,31 @@ import (
 )
 
 type FakeNPM struct {
+	LoginStub        func(userName string, password string, email string, registry string) error
+	loginMutex       sync.RWMutex
+	loginArgsForCall []struct {
+		userName string
+		password string
+		email    string
+		registry string
+	}
+	loginReturns struct {
+		result1 error
+	}
+	loginReturnsOnCall map[int]struct {
+		result1 error
+	}
+	LogoutStub        func(registry string) error
+	logoutMutex       sync.RWMutex
+	logoutArgsForCall []struct {
+		registry string
+	}
+	logoutReturns struct {
+		result1 error
+	}
+	logoutReturnsOnCall map[int]struct {
+		result1 error
+	}
 	ViewStub        func(packageName string, registry string) (*npm.PackageInfo, error)
 	viewMutex       sync.RWMutex
 	viewArgsForCall []struct {
@@ -60,6 +85,105 @@ type FakeNPM struct {
 	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
+}
+
+func (fake *FakeNPM) Login(userName string, password string, email string, registry string) error {
+	fake.loginMutex.Lock()
+	ret, specificReturn := fake.loginReturnsOnCall[len(fake.loginArgsForCall)]
+	fake.loginArgsForCall = append(fake.loginArgsForCall, struct {
+		userName string
+		password string
+		email    string
+		registry string
+	}{userName, password, email, registry})
+	fake.recordInvocation("Login", []interface{}{userName, password, email, registry})
+	fake.loginMutex.Unlock()
+	if fake.LoginStub != nil {
+		return fake.LoginStub(userName, password, email, registry)
+	}
+	if specificReturn {
+		return ret.result1
+	}
+	return fake.loginReturns.result1
+}
+
+func (fake *FakeNPM) LoginCallCount() int {
+	fake.loginMutex.RLock()
+	defer fake.loginMutex.RUnlock()
+	return len(fake.loginArgsForCall)
+}
+
+func (fake *FakeNPM) LoginArgsForCall(i int) (string, string, string, string) {
+	fake.loginMutex.RLock()
+	defer fake.loginMutex.RUnlock()
+	return fake.loginArgsForCall[i].userName, fake.loginArgsForCall[i].password, fake.loginArgsForCall[i].email, fake.loginArgsForCall[i].registry
+}
+
+func (fake *FakeNPM) LoginReturns(result1 error) {
+	fake.LoginStub = nil
+	fake.loginReturns = struct {
+		result1 error
+	}{result1}
+}
+
+func (fake *FakeNPM) LoginReturnsOnCall(i int, result1 error) {
+	fake.LoginStub = nil
+	if fake.loginReturnsOnCall == nil {
+		fake.loginReturnsOnCall = make(map[int]struct {
+			result1 error
+		})
+	}
+	fake.loginReturnsOnCall[i] = struct {
+		result1 error
+	}{result1}
+}
+
+func (fake *FakeNPM) Logout(registry string) error {
+	fake.logoutMutex.Lock()
+	ret, specificReturn := fake.logoutReturnsOnCall[len(fake.logoutArgsForCall)]
+	fake.logoutArgsForCall = append(fake.logoutArgsForCall, struct {
+		registry string
+	}{registry})
+	fake.recordInvocation("Logout", []interface{}{registry})
+	fake.logoutMutex.Unlock()
+	if fake.LogoutStub != nil {
+		return fake.LogoutStub(registry)
+	}
+	if specificReturn {
+		return ret.result1
+	}
+	return fake.logoutReturns.result1
+}
+
+func (fake *FakeNPM) LogoutCallCount() int {
+	fake.logoutMutex.RLock()
+	defer fake.logoutMutex.RUnlock()
+	return len(fake.logoutArgsForCall)
+}
+
+func (fake *FakeNPM) LogoutArgsForCall(i int) string {
+	fake.logoutMutex.RLock()
+	defer fake.logoutMutex.RUnlock()
+	return fake.logoutArgsForCall[i].registry
+}
+
+func (fake *FakeNPM) LogoutReturns(result1 error) {
+	fake.LogoutStub = nil
+	fake.logoutReturns = struct {
+		result1 error
+	}{result1}
+}
+
+func (fake *FakeNPM) LogoutReturnsOnCall(i int, result1 error) {
+	fake.LogoutStub = nil
+	if fake.logoutReturnsOnCall == nil {
+		fake.logoutReturnsOnCall = make(map[int]struct {
+			result1 error
+		})
+	}
+	fake.logoutReturnsOnCall[i] = struct {
+		result1 error
+	}{result1}
 }
 
 func (fake *FakeNPM) View(packageName string, registry string) (*npm.PackageInfo, error) {
@@ -264,6 +388,10 @@ func (fake *FakeNPM) PublishReturnsOnCall(i int, result1 error) {
 func (fake *FakeNPM) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
+	fake.loginMutex.RLock()
+	defer fake.loginMutex.RUnlock()
+	fake.logoutMutex.RLock()
+	defer fake.logoutMutex.RUnlock()
 	fake.viewMutex.RLock()
 	defer fake.viewMutex.RUnlock()
 	fake.installMutex.RLock()

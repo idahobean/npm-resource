@@ -8,9 +8,12 @@ type Request struct {
 }
 
 type Params struct {
-	Path    string `json:"path"`
-	Version string `json:"version"`
-	Tag     string `json:"tag"`
+	Username string `json:"username"`
+	Password string `json:"password"`
+	Email    string `json:"email"`
+	Path     string `json:"path"`
+	Version  string `json:"version"`
+	Tag      string `json:"tag"`
 }
 
 type Response struct {

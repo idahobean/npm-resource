@@ -3,8 +3,8 @@ package out_test
 import (
 	"bytes"
 	"encoding/json"
-	"os/exec"
 	"fmt"
+	"os/exec"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -18,21 +18,23 @@ import (
 
 var _ = Describe("Out", func() {
 	var (
-		cmd *exec.Cmd
+		cmd     *exec.Cmd
 		request out.Request
 	)
 
 	BeforeEach(func() {
 		request = out.Request{
 			Source: resource.Source{
-				Token: "test-token",
 				PackageName: "foobar-pack",
-				Registry: "http://my.private.registry/",
+				Registry:    "http://localhost:8080/",
 			},
 			Params: out.Params{
-				Path: "baz/fox",
-				Version: "0.1.2",
-				Tag: "taag",
+				Username: "abc",
+				Password: "def",
+				Email:    "ghi@jkl.mno",
+				Path:     "baz/fox",
+				Version:  "0.1.2",
+				Tag:      "taag",
 			},
 		}
 	})
@@ -64,14 +66,75 @@ var _ = Describe("Out", func() {
 				Ω(err).ShouldNot(HaveOccurred())
 
 				// shim outputs arguments
-				Ω(session.Err).Should(gbytes.Say("npm publish baz/fox --tag taag --registry http://my.private.registry/"))
-				Ω(session.Err).Should(gbytes.Say("npm view foobar-pack --registry http://my.private.registry/"))
-
+				Ω(session.Err).Should(gbytes.Say("npm-cli-login -u abc -p def -e ghi@jkl.mno -r http://localhost:8080/"))
+				Ω(session.Err).Should(gbytes.Say("npm publish baz/fox --tag taag --registry http://localhost:8080/"))
+				Ω(session.Err).Should(gbytes.Say("npm view foobar-pack --registry http://localhost:8080/"))
+				Ω(session.Err).Should(gbytes.Say("npm logout --registry http://localhost:8080/"))
 			})
 		})
 	})
 
 	Context("when required option is empty", func() {
+		Context("username is empty", func() {
+			BeforeEach(func() {
+				request.Params.Username = ""
+			})
+
+			It("returns an error", func() {
+				session, err := gexec.Start(
+					cmd,
+					GinkgoWriter,
+					GinkgoWriter,
+				)
+				Ω(err).ShouldNot(HaveOccurred())
+
+				Eventually(session).Should(gexec.Exit(1))
+
+				errMsg := fmt.Sprintf("error parameter required: username")
+				Ω(session.Err).Should(gbytes.Say(errMsg))
+			})
+		})
+
+		Context("password is empty", func() {
+			BeforeEach(func() {
+				request.Params.Password = ""
+			})
+
+			It("returns an error", func() {
+				session, err := gexec.Start(
+					cmd,
+					GinkgoWriter,
+					GinkgoWriter,
+				)
+				Ω(err).ShouldNot(HaveOccurred())
+
+				Eventually(session).Should(gexec.Exit(1))
+
+				errMsg := fmt.Sprintf("error parameter required: password")
+				Ω(session.Err).Should(gbytes.Say(errMsg))
+			})
+		})
+
+		Context("email is empty", func() {
+			BeforeEach(func() {
+				request.Params.Email = ""
+			})
+
+			It("returns an error", func() {
+				session, err := gexec.Start(
+					cmd,
+					GinkgoWriter,
+					GinkgoWriter,
+				)
+				Ω(err).ShouldNot(HaveOccurred())
+
+				Eventually(session).Should(gexec.Exit(1))
+
+				errMsg := fmt.Sprintf("error parameter required: email")
+				Ω(session.Err).Should(gbytes.Say(errMsg))
+			})
+		})
+
 		Context("path is empty", func() {
 			BeforeEach(func() {
 				request.Params.Path = ""

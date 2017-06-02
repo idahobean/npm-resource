@@ -1,7 +1,6 @@
 package resource
 
 type Source struct {
-	Token       string `json:"token"`
 	PackageName string `json:"package_name"`
 	Registry    string `json:"registry"`
 }

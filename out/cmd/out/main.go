@@ -21,6 +21,15 @@ func main() {
 	}
 
 	var err error
+	if request.Params.Username == "" {
+		err = errors.New("username")
+	}
+	if request.Params.Password == "" {
+		err = errors.New("password")
+	}
+	if request.Params.Email == "" {
+		err = errors.New("email")
+	}
 	if request.Params.Path == "" {
 		err = errors.New("path")
 	}

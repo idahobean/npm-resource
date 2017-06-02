@@ -20,14 +20,12 @@ func NewCommand(packageManager npm.PackageManager) *Command {
 }
 
 func (command *Command) Run(request Request) (Response, error) {
-	parsedUrl, err := url.Parse(request.Source.Registry)
-	if err != nil {
-		return Response{}, err
-	}
-	authToken := "//" + parsedUrl.Host + "/:_authToken=" + request.Source.Token
-	ioutil.WriteFile(request.Params.Path+"/.npmrc", []byte(authToken), os.ModePerm)
-
-	path, err := filepath.Abs(filepath.Dir(os.Args[0]))
+	err = command.packageManager.Login(
+		request.Params.UserName,
+		request.Params.Password,
+		request.Params.Email,
+		request.Source.Registry,
+	)
 	if err != nil {
 		return Response{}, err
 	}
@@ -43,6 +41,13 @@ func (command *Command) Run(request Request) (Response, error) {
 
 	out, err := command.packageManager.View(
 		request.Source.PackageName,
+		request.Source.Registry,
+	)
+	if err != nil {
+		return Response{}, err
+	}
+
+	err := command.packageManager.Logout(
 		request.Source.Registry,
 	)
 	if err != nil {
