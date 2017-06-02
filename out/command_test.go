@@ -101,7 +101,7 @@ var _ = Describe("Out Command", func() {
 			By("npm logout")
 			Ω(NPM.LogoutCallCount()).Should(Equal(1))
 
-			registry := NPM.LogoutArgsForCall(0)
+			registry = NPM.LogoutArgsForCall(0)
 
 			Ω(registry).Should(Equal("http://my.private.registry/"))
 

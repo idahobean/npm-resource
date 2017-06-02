@@ -29,7 +29,7 @@ var _ = Describe("Out", func() {
 				Registry:    "http://localhost:8080/",
 			},
 			Params: out.Params{
-				Username: "abc",
+				UserName: "abc",
 				Password: "def",
 				Email:    "ghi@jkl.mno",
 				Path:     "baz/fox",
@@ -76,7 +76,7 @@ var _ = Describe("Out", func() {
 	Context("when required option is empty", func() {
 		Context("username is empty", func() {
 			BeforeEach(func() {
-				request.Params.Username = ""
+				request.Params.UserName = ""
 			})
 
 			It("returns an error", func() {
