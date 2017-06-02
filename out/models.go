@@ -12,7 +12,6 @@ type Params struct {
 	Password string `json:"password"`
 	Email    string `json:"email"`
 	Path     string `json:"path"`
-	Version  string `json:"version"`
 	Tag      string `json:"tag"`
 }
 

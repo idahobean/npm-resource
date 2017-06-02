@@ -12,7 +12,6 @@ type PackageManager interface {
 	Logout(registry string) error
 	View(packageName string, registry string) (*PackageInfo, error)
 	Install(packageName string, registry string) error
-	Version(version string) error
 	Publish(path string, tag string, registry string) error
 }
 
@@ -74,11 +73,6 @@ func (npm *NPM) Install(packageName string, registry string) error {
 		args = append(args, "--registry", registry)
 	}
 
-	return npm.npm(args...).Run()
-}
-
-func (npm *NPM) Version(version string) error {
-	args := []string{"version", version}
 	return npm.npm(args...).Run()
 }
 

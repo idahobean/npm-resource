@@ -11,7 +11,7 @@ A Concourse resource to manage a npm package.
 
 ### `check`: Check for new version of specified npm package.
 
-Checks for new versions of specified `package_name` from `registry`.
+Checks for new version of specified `package_name` from `registry`.
 
 ### `in`: Install npm package from registry.
 
@@ -27,7 +27,6 @@ Checks for new versions of specified `package_name` from `registry`.
 * `password`: *Required.* npm registry login password.
 * `email`: *Required.* npm registry login email.
 * `path`: *Required.* Path to the package to be published. (including `package.json`) 
-* `version`: *Optional.* [Version](https://docs.npmjs.com/cli/version) of the package to publish.
 * `tag`: *Optional.* package tag.
 
 ## Pipeline example
@@ -66,7 +65,6 @@ jobs:
       password: bar
       email: baz@fox.qoo
       path: resource-npm-package
-      version: patch
-      tag: patch
+      tag: latest
 
 ```

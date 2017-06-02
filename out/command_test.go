@@ -36,7 +36,6 @@ var _ = Describe("Out Command", func() {
 				Password: "bbb",
 				Email:    "ccc@ddd.eee",
 				Path:     "bar/baz",
-				Version:  "0.0.2",
 				Tag:      "fox",
 			},
 		}
