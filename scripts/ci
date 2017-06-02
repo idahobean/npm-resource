@@ -20,6 +20,9 @@ BUILD_DIR=$PWD/built-resource
 
     cd $GOPATH/src/github.com/idahobean/npm-resource
 
+# debug
+find .
+
     docker-compose -f scripts/docker-compose.yml up -d
     go install github.com/idahobean/npm-resource/vendor/github.com/onsi/ginkgo/ginkgo
 
