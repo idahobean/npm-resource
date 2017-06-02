@@ -33,7 +33,7 @@ func (command *Command) Run(request Request) (Response, error) {
 		return Response{}, err
 	}
 
-	err := command.packageManager.Publish(
+	err = command.packageManager.Publish(
 		filepath.Join(path, request.Params.Path),
 		request.Params.Tag,
 		request.Source.Registry,
@@ -50,7 +50,7 @@ func (command *Command) Run(request Request) (Response, error) {
 		return Response{}, err
 	}
 
-	err := command.packageManager.Logout(
+	err = command.packageManager.Logout(
 		request.Source.Registry,
 	)
 	if err != nil {
