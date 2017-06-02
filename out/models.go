@@ -8,7 +8,7 @@ type Request struct {
 }
 
 type Params struct {
-	Username string `json:"username"`
+	UserName string `json:"username"`
 	Password string `json:"password"`
 	Email    string `json:"email"`
 	Path     string `json:"path"`
