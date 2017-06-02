@@ -1,0 +1,7 @@
+version "2"
+
+services:
+  sinopia2:
+    image: idahobean/sinopia2
+    ports:
+      - 8080:4873/tcp
