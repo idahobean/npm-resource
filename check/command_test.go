@@ -26,7 +26,6 @@ var _ = Describe("Check Command", func() {
 
 		request = check.Request{
 			Source: resource.Source{
-				Token:       "test",
 				PackageName: "foo-package",
 				Registry:    "http://my.private.registry/",
 			},

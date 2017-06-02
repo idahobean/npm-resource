@@ -34,7 +34,7 @@ var _ = Describe("Out", func() {
 				Email:    "ghi@jkl.mno",
 				Path:     "baz/fox",
 				Version:  "0.1.2",
-				Tag:      "taag",
+				Tag:      "patch",
 			},
 		}
 	})
@@ -67,7 +67,7 @@ var _ = Describe("Out", func() {
 
 				// shim outputs arguments
 				Ω(session.Err).Should(gbytes.Say("npm-cli-login -u abc -p def -e ghi@jkl.mno -r http://localhost:8080/"))
-				Ω(session.Err).Should(gbytes.Say("npm publish baz/fox --tag taag --registry http://localhost:8080/"))
+				Ω(session.Err).Should(gbytes.Say("npm publish baz/fox --tag patch --registry http://localhost:8080/"))
 				Ω(session.Err).Should(gbytes.Say("npm view foobar-pack --registry http://localhost:8080/"))
 				Ω(session.Err).Should(gbytes.Say("npm logout --registry http://localhost:8080/"))
 			})

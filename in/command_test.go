@@ -26,7 +26,6 @@ var _ = Describe("In Command", func() {
 
 		request = in.Request{
 			Source: resource.Source{
-				Token:       "test",
 				PackageName: "foo-package",
 				Registry:    "http://my.private.registry/",
 			},
