@@ -21,7 +21,7 @@ func main() {
 	}
 
 	var err error
-	if request.Params.Username == "" {
+	if request.Params.UserName == "" {
 		err = errors.New("username")
 	}
 	if request.Params.Password == "" {
