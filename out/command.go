@@ -3,8 +3,8 @@ package out
 import (
 	"github.com/idahobean/npm-resource"
 	"github.com/idahobean/npm-resource/npm"
-	"path/filepath"
 	"os"
+	"path/filepath"
 )
 
 type Command struct {

@@ -19,8 +19,9 @@ import (
 
 var _ = Describe("Out", func() {
 	var (
-		cmd     *exec.Cmd
-		request out.Request
+		cmd         *exec.Cmd
+		request     out.Request
+		packagePath string
 	)
 
 	BeforeEach(func() {
@@ -70,7 +71,7 @@ var _ = Describe("Out", func() {
 
 				// shim outputs arguments
 				Ω(session.Err).Should(gbytes.Say("npm-cli-login -u abc -p def -e ghi@jkl.mno -r http://localhost:8080/"))
-				Ω(session.Err).Should(gbytes.Say("npm publish %s --tag stable --registry http://localhost:8080/", packagePath,))
+				Ω(session.Err).Should(gbytes.Say("npm publish %s --tag stable --registry http://localhost:8080/", packagePath))
 				Ω(session.Err).Should(gbytes.Say("npm view sample-node --registry http://localhost:8080/"))
 				Ω(session.Err).Should(gbytes.Say("npm logout --registry http://localhost:8080/"))
 			})
