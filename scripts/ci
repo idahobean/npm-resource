@@ -21,6 +21,7 @@ BUILD_DIR=$PWD/built-resource
     docker images
 
     cd $GOPATH/src/github.com/idahobean/npm-resource
+    cp -r /sample-node .
 
 # debug
 find .
