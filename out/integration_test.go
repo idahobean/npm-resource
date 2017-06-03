@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os/exec"
+	"path/filepath"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -23,6 +24,9 @@ var _ = Describe("Out", func() {
 	)
 
 	BeforeEach(func() {
+		packagePath, err := filepath.Abs("../sample-node")
+		Ω(err).ShouldNot(HaveOccurred())
+
 		request = out.Request{
 			Source: resource.Source{
 				PackageName: "sample-node",
@@ -32,7 +36,7 @@ var _ = Describe("Out", func() {
 				UserName: "abc",
 				Password: "def",
 				Email:    "ghi@jkl.mno",
-				Path:     "sample-node",
+				Path:     packagePath,
 				Tag:      "stable",
 			},
 		}
@@ -66,7 +70,7 @@ var _ = Describe("Out", func() {
 
 				// shim outputs arguments
 				Ω(session.Err).Should(gbytes.Say("npm-cli-login -u abc -p def -e ghi@jkl.mno -r http://localhost:8080/"))
-				Ω(session.Err).Should(gbytes.Say("npm publish sample-node --tag stable --registry http://localhost:8080/"))
+				Ω(session.Err).Should(gbytes.Say("npm publish %s --tag stable --registry http://localhost:8080/", packagePath,))
 				Ω(session.Err).Should(gbytes.Say("npm view sample-node --registry http://localhost:8080/"))
 				Ω(session.Err).Should(gbytes.Say("npm logout --registry http://localhost:8080/"))
 			})
