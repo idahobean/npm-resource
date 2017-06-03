@@ -35,7 +35,7 @@ var _ = Describe("Out", func() {
 		packagePath, err := filepath.Abs("../sample-node")
 		Ω(err).ShouldNot(HaveOccurred())
 
-		err = os.Rename(packagePath, filepath.Join(tmpDir, "sample-node"))
+		err = os.Symlink(packagePath, filepath.Join(tmpDir, "sample-node"))
 
 // debug
 fmt.Println(err)
