@@ -58,7 +58,7 @@ var _ = Describe("Out", func() {
 				)
 				Ω(err).ShouldNot(HaveOccurred())
 
-				Eventually(session).Should(gexec.Exit(0))
+				Eventually(session, "15s").Should(gexec.Exit(0))
 
 				var response out.Response
 				err = json.Unmarshal(session.Out.Contents(), &response)
