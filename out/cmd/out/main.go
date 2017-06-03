@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"path/filepath"
 
 	"github.com/idahobean/npm-resource/npm"
 	"github.com/idahobean/npm-resource/out"
@@ -36,6 +37,8 @@ func main() {
 	if err != nil {
 		fatal("parameter required", err)
 	}
+
+	request.Params.Path = filepath.Join(os.Args[1], request.Params.Path)
 
 	response, err := command.Run(request)
 	if err != nil {

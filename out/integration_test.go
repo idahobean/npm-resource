@@ -47,7 +47,7 @@ var _ = Describe("Out", func() {
 				UserName: "abc",
 				Password: "def",
 				Email:    "ghi@jkl.mno",
-				Path:     filepath.Join(tmpDir, "sample-node"),
+				Path:     "sample-node",
 				Tag:      "stable",
 			},
 		}
@@ -59,7 +59,7 @@ var _ = Describe("Out", func() {
 		err := json.NewEncoder(stdin).Encode(request)
 		Ω(err).ShouldNot(HaveOccurred())
 
-		cmd = exec.Command(binPath) // builded from test suite
+		cmd = exec.Command(binPath, tmpDir) // builded from test suite
 		cmd.Stdin = stdin
 		cmd.Dir = tmpDir
 	})
