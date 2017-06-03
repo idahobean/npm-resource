@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"os/exec"
 	"path/filepath"
 
@@ -19,13 +20,21 @@ import (
 
 var _ = Describe("Out", func() {
 	var (
-		cmd         *exec.Cmd
-		request     out.Request
-		packagePath string
+		tmpDir  string
+		cmd     *exec.Cmd
+		request out.Request
 	)
 
 	BeforeEach(func() {
+		var err error
+
+		tmpDir, err = ioutil.TempDir("", "npm_resource_out")
+		Ω(err).ShouldNot(HaveOccurred())
+
 		packagePath, err := filepath.Abs("../sample-node")
+		Ω(err).ShouldNot(HaveOccurred())
+
+		err = os.Rename(packagePath, filepath.Join(tmpDir, "sample-node"))
 		Ω(err).ShouldNot(HaveOccurred())
 
 		request = out.Request{
@@ -37,7 +46,7 @@ var _ = Describe("Out", func() {
 				UserName: "abc",
 				Password: "def",
 				Email:    "ghi@jkl.mno",
-				Path:     packagePath,
+				Path:     "sample-node",
 				Tag:      "stable",
 			},
 		}
@@ -51,6 +60,12 @@ var _ = Describe("Out", func() {
 
 		cmd = exec.Command(binPath) // builded from test suite
 		cmd.Stdin = stdin
+		cmd.Dir = tmpDir
+	})
+
+	AfterEach(func() {
+		err := os.RemoveAll(tmpDir)
+		Ω(err).ShouldNot(HaveOccurred())
 	})
 
 	Context("when command terminates correctly", func() {
