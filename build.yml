@@ -10,7 +10,6 @@ inputs:
 - name: npm-resource
   path: gopath/src/github.com/idahobean/npm-resource
 - name: sample-node
-  path: gopath/src/github.com/idahobean/npm-resource/sample-node
 
 outputs:
 - name: built-resource

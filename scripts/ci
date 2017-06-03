@@ -20,6 +20,7 @@ BUILD_DIR=$PWD/built-resource
 
     docker images
 
+    mv $PWD/sample-node $GOPATH/src/github.com/idahobean/npm-resource
     cd $GOPATH/src/github.com/idahobean/npm-resource
 
 # debug
