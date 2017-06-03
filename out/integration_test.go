@@ -36,6 +36,10 @@ var _ = Describe("Out", func() {
 		Ω(err).ShouldNot(HaveOccurred())
 
 		err = os.Rename(packagePath, filepath.Join(tmpDir, "sample-node"))
+
+// debug
+fmt.Println(err)
+
 		Ω(err).ShouldNot(HaveOccurred())
 
 		request = out.Request{
