@@ -2,8 +2,6 @@ package out_test
 
 import (
 	"errors"
-	"os"
-	"path/filepath"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -89,12 +87,7 @@ var _ = Describe("Out Command", func() {
 
 			path, tag, registry := NPM.PublishArgsForCall(0)
 
-			basePath, err := filepath.Abs(filepath.Dir(os.Args[0]))
-			if err != nil {
-				return
-			}
-
-			Ω(path).Should(Equal(filepath.Join(basePath, "bar/baz")))
+			Ω(path).Should(Equal("bar/baz"))
 			Ω(tag).Should(Equal("fox"))
 			Ω(registry).Should(Equal("http://my.private.registry/"))
 
@@ -106,8 +99,6 @@ var _ = Describe("Out Command", func() {
 			Ω(registry).Should(Equal("http://my.private.registry/"))
 
 		})
-
-		// TODO other test patterns?
 
 		Describe("handling any errors", func() {
 			var expectedError error

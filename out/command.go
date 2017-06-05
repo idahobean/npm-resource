@@ -3,8 +3,6 @@ package out
 import (
 	"github.com/idahobean/npm-resource"
 	"github.com/idahobean/npm-resource/npm"
-	"os"
-	"path/filepath"
 )
 
 type Command struct {
@@ -28,13 +26,8 @@ func (command *Command) Run(request Request) (Response, error) {
 		return Response{}, err
 	}
 
-	path, err := filepath.Abs(filepath.Dir(os.Args[0]))
-	if err != nil {
-		return Response{}, err
-	}
-
 	err = command.packageManager.Publish(
-		filepath.Join(path, request.Params.Path),
+		request.Params.Path,
 		request.Params.Tag,
 		request.Source.Registry,
 	)
