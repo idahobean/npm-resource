@@ -15,23 +15,20 @@ BUILD_DIR=$PWD/built-resource
     source /docker-lib.sh
     start_docker
 
-    docker load -i sinopia2/image
-    docker tag "$(cat sinopia2/image-id)" "$(cat sinopia2/repository):$(cat sinopia2/tag)"
+    docker load -i verdaccio/image
+    docker tag "$(cat verdaccio/image-id)" "$(cat verdaccio/repository):$(cat verdaccio/tag)"
 
     docker images
 
     cp -r $PWD/sample-node $GOPATH/src/github.com/idahobean/npm-resource
     cd $GOPATH/src/github.com/idahobean/npm-resource
 
-# debug
-find .
-
-    docker-compose -f scripts/docker-compose.yml up -d
+    COMPOSE_HTTP_TIMEOUT=300 docker-compose -f scripts/docker-compose.yml up -d
     go install github.com/idahobean/npm-resource/vendor/github.com/onsi/ginkgo/ginkgo
 
     CGO_ENABLED=1 ginkgo -race -r -p "$@"
 
-    docker-compose -f scripts/docker-compose.yml down
+    COMPOSE_HTTP_TIMEOUT=300 docker-compose -f scripts/docker-compose.yml down
     docker volume rm $(docker volume ls -q)
 )
 
