@@ -41,7 +41,7 @@ var _ = Describe("Out", func() {
 		request = out.Request{
 			Source: resource.Source{
 				PackageName: "sample-node",
-				Registry:    "http://localhost:8080/",
+				Registry:    "http://localhost:8080",
 			},
 			Params: out.Params{
 				UserName: "abc",
@@ -86,10 +86,10 @@ var _ = Describe("Out", func() {
 				Ω(err).ShouldNot(HaveOccurred())
 
 				// shim outputs arguments
-				Ω(session.Err).Should(gbytes.Say("npm-cli-login -u abc -p def -e ghi@jkl.mno -r http://localhost:8080/"))
-				Ω(session.Err).Should(gbytes.Say("npm publish %s --tag stable --registry http://localhost:8080/", filepath.Join(tmpDir, "sample-node")))
-				Ω(session.Err).Should(gbytes.Say("npm view sample-node --registry http://localhost:8080/"))
-				Ω(session.Err).Should(gbytes.Say("npm logout --registry http://localhost:8080/"))
+				Ω(session.Err).Should(gbytes.Say("npm-cli-login -u abc -p def -e ghi@jkl.mno -r http://localhost:8080"))
+				Ω(session.Err).Should(gbytes.Say("npm publish %s --tag stable --registry http://localhost:8080", filepath.Join(tmpDir, "sample-node")))
+				Ω(session.Err).Should(gbytes.Say("npm view sample-node --json --registry http://localhost:8080"))
+				Ω(session.Err).Should(gbytes.Say("npm logout --registry http://localhost:8080"))
 			})
 		})
 	})

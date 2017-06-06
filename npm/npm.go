@@ -3,6 +3,7 @@ package npm
 import (
 	"os"
 	"os/exec"
+	"bytes"
 
 	simpleJson "github.com/bitly/go-simplejson"
 )
@@ -28,7 +29,11 @@ func (npm *NPM) Login(userName string, password string, email string, registry s
 		args = append(args, "-r", registry)
 	}
 
-	return npm.npmCliLogin(args...).Run()
+	cmd := exec.Command("npm-cli-login", args...)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+
+	return cmd.Run()
 }
 
 func (npm *NPM) Logout(registry string) error {
@@ -42,18 +47,23 @@ func (npm *NPM) Logout(registry string) error {
 }
 
 func (npm *NPM) View(packageName string, registry string) (*PackageInfo, error) {
-	args := []string{"view", packageName}
+	args := []string{"view", packageName, "--json"}
 
 	if registry != "" {
 		args = append(args, "--registry", registry)
 	}
 
-	out, err := npm.npm(args...).Output()
+	var out bytes.Buffer
+	cmd := exec.Command("npm", args...)
+	cmd.Stdout = &out
+	cmd.Stderr = os.Stderr
+
+	err := cmd.Run()
 	if err != nil {
 		return &PackageInfo{}, err
 	}
 
-	js, err := simpleJson.NewJson([]byte(out))
+	js, err := simpleJson.NewJson(out.Bytes())
 	if err != nil {
 		return &PackageInfo{}, err
 	}
@@ -91,14 +101,6 @@ func (npm *NPM) Publish(path string, tag string, registry string) error {
 
 func (npm *NPM) npm(args ...string) *exec.Cmd {
 	cmd := exec.Command("npm", args...)
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-
-	return cmd
-}
-
-func (npm *NPM) npmCliLogin(args ...string) *exec.Cmd {
-	cmd := exec.Command("npm-cli-login", args...)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 
