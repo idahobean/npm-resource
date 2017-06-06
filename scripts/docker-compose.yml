@@ -1,7 +1,7 @@
 version: "2"
 
 services:
-  sinopia2:
-    image: idahobean/verdaccio
+  verdaccio:
+    image: verdaccio/verdaccio
     ports:
       - 8080:4873/tcp
