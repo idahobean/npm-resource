@@ -2,6 +2,6 @@ version: "2"
 
 services:
   verdaccio:
-    image: verdaccio/verdaccio
+    image: idahobean/verdaccio
     ports:
       - 8080:4873/tcp

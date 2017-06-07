@@ -6,7 +6,7 @@ image_resource:
   source: {repository: idahobean/dcind-golang-npm}
 
 inputs:
-- name: sinopia2
+- name: verdaccio
 - name: npm-resource
   path: gopath/src/github.com/idahobean/npm-resource
 - name: sample-node
