@@ -22,7 +22,7 @@ func main() {
 
 	var err error
 	if request.Source.PackageName == "" {
-		err = errors.New("package name")
+		err = errors.New("package_name")
 	}
 	if err != nil {
 		fatal("parameter required", err)
