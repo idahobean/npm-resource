@@ -47,7 +47,7 @@ var _ = Describe("Check", func() {
 		err = exec.Command("npm-cli-login", loginArgs...).Run()
 		Ω(err).ShouldNot(HaveOccurred())
 
-		args := []string{"publish", packagePath, "--registry", "http://localhost:8080"}
+		args := []string{"publish", packagePath, "--registry", "http://localhost:8080", "--force"}
 		err = exec.Command("npm", args...).Run()
 		Ω(err).ShouldNot(HaveOccurred())
 
