@@ -68,7 +68,7 @@ var _ = Describe("Out", func() {
 		err := os.RemoveAll(tmpDir)
 		Ω(err).ShouldNot(HaveOccurred())
 
-		args := []string{"-u", "abc", "-p", "def", "-e", ghi@jkl.mno", "-r", "http://localhost:8080"}
+		args := []string{"-u", "abc", "-p", "def", "-e", "ghi@jkl.mno", "-r", "http://localhost:8080"}
 		err := exec.Command("npm-cli-login", args...).Run()
 		Ω(err).ShouldNot(HaveOccurred())
 
