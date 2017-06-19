@@ -69,11 +69,11 @@ var _ = Describe("Out", func() {
 		Ω(err).ShouldNot(HaveOccurred())
 
 		args := []string{"-u", "abc", "-p", "def", "-e", "ghi@jkl.mno", "-r", "http://localhost:8080"}
-		err := exec.Command("npm-cli-login", args...).Run()
+		err = exec.Command("npm-cli-login", args...).Run()
 		Ω(err).ShouldNot(HaveOccurred())
 
-		args := []string{"unpublish", "sample-node", "--registry", "http://localhost:8080", "--force"}
-		err := exec.Command("npm", args...).Run()
+		args = []string{"unpublish", "sample-node", "--registry", "http://localhost:8080", "--force"}
+		err = exec.Command("npm", args...).Run()
 		Ω(err).ShouldNot(HaveOccurred())
 	})
 
