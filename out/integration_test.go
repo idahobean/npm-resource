@@ -96,7 +96,7 @@ var _ = Describe("Out", func() {
 						},
 						{
 							Name: "homepage",
-							Value: "https://github.com/idahobean/samplen-node#readme"},
+							Value: "https://github.com/idahobean/sample-node#readme"},
 					},
 				}))
 			})
