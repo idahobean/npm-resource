@@ -29,7 +29,6 @@ BUILD_DIR=$PWD/built-resource
     CGO_ENABLED=1 ginkgo -race -r -p "$@"
 
     COMPOSE_HTTP_TIMEOUT=300 docker-compose -f scripts/docker-compose.yml down
-    docker volume rm $(docker volume ls -q)
 )
 
 # build binaries
