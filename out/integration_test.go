@@ -99,11 +99,11 @@ var _ = Describe("Out", func() {
 					},
 					Metadata: []resource.MetadataPair{
 						{
-							Name: "name",
+							Name:  "name",
 							Value: "sample-node",
 						},
 						{
-							Name: "homepage",
+							Name:  "homepage",
 							Value: "https://github.com/idahobean/sample-node#readme"},
 					},
 				}))
