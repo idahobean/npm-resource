@@ -104,7 +104,9 @@ var _ = Describe("In", func() {
 					},
 				}))
 
-				actual, err := exec.Command("npm", "ls", "sample-node")
+				npmCmd := exec.Command("npm", "ls", "sample-node")
+				npmCmd.Dir = tmpDir
+				actual, err := npmCmd.Output()
 				Ω(string(actual)).Should(ContainSubstring("sample-node@0.0.1"))
 			})
 		})
