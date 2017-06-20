@@ -1,0 +1,50 @@
+jobs:
+- name: build-npm-resource-image
+  public: false
+  plan:
+  - aggregate:
+    - get: npm-resource-base-image
+      params: {save: true}
+    - get: verdaccio
+      params: {save: true}
+    - get: sample-node
+    - get: npm-resource
+      trigger: true
+  - task: resource-unit
+    privileged: true
+    file: npm-resource/build.yml
+  - put: npm-resource-image
+    params:
+      load_base: npm-resource-base-image
+      build: built-resource
+
+resources:
+- name: npm-resource
+  type: git
+  source:
+    uri: https://github.com/idahobean/npm-resource.git
+    branch: master
+
+- name: sample-node
+  type: git
+  source:
+    uri: https://github.com/idahobean/sample-node.git
+    branch: master
+
+- name: npm-resource-image
+  type: docker-image
+  source:
+    username: {{docker-username}}
+    email: {{docker-email}}
+    password: {{docker-password}}
+    repository: idahobean/npm-resource
+
+- name: npm-resource-base-image
+  type: docker-image
+  source:
+    repository: idahobean/npm-resource-base
+
+- name: verdaccio
+  type: docker-image
+  source:
+    repository: idahobean/verdaccio
