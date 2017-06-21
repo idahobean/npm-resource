@@ -23,7 +23,7 @@ Checks for new version of specified `package_name` from `registry`.
 
 #### Parameters
 
-* `user_name`: *Required.* npm registry login username.
+* `username`: *Required.* npm registry login username.
 * `password`: *Required.* npm registry login password.
 * `email`: *Required.* npm registry login email.
 * `path`: *Required.* Path to the package to be published. (including `package.json`) 
@@ -61,7 +61,7 @@ jobs:
     file: resource-npm-package/build.yml
   - put: private-npm-registry
     params:
-      user_name: foo
+      username: foo
       password: bar
       email: baz@fox.qoo
       path: resource-npm-package
