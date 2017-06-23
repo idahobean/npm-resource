@@ -51,19 +51,10 @@ var _ = Describe("Check Command", func() {
 			response, err := command.Run(request)
 			Ω(err).ShouldNot(HaveOccurred())
 
-			Ω(response.Version.Version).Should(Equal("0.0.1"))
-			Ω(response.Metadata[0]).Should(Equal(
-				resource.MetadataPair{
-					Name:  "name",
-					Value: "foo-package",
-				},
-			))
-			Ω(response.Metadata[1]).Should(Equal(
-				resource.MetadataPair{
-					Name:  "homepage",
-					Value: "http://foobar.com",
-				},
-			))
+			Ω(response).Should(HaveLen(1))
+			Ω(response[0]).Should(Equal(resource.Version{
+				Version: "0.0.1",
+			}))
 
 			By("npm view")
 			Ω(NPM.ViewCallCount()).Should(Equal(1))

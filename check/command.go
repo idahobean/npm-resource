@@ -24,19 +24,9 @@ func (command *Command) Run(request Request) (Response, error) {
 		return Response{}, err
 	}
 
-	return Response{
-		Version: resource.Version{
+	return []resource.Version{
+		{
 			Version: out.Version,
-		},
-		Metadata: []resource.MetadataPair{
-			{
-				Name:  "name",
-				Value: out.Name,
-			},
-			{
-				Name:  "homepage",
-				Value: out.Homepage,
-			},
 		},
 	}, nil
 }

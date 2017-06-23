@@ -75,7 +75,7 @@ var _ = Describe("Check", func() {
 
 	Context("when command terminates correctly", func() {
 		Context("packagename is fullfilled", func() {
-			It("returns npm version", func() {
+			It("returns newest package version", func() {
 				session, err := gexec.Start(
 					cmd,
 					GinkgoWriter,
@@ -89,20 +89,8 @@ var _ = Describe("Check", func() {
 				err = json.Unmarshal(session.Out.Contents(), &response)
 				Ω(err).ShouldNot(HaveOccurred())
 
-				Ω(response).Should(Equal(check.Response{
-					Version: resource.Version{
-						Version: "0.0.1",
-					},
-					Metadata: []resource.MetadataPair{
-						{
-							Name:  "name",
-							Value: "sample-node",
-						},
-						{
-							Name:  "homepage",
-							Value: "https://github.com/idahobean/sample-node#readme"},
-					},
-				}))
+				Ω(response).Should(HaveLen(1))
+				Ω(response[0]).Should(Equal(resource.Version{Version: "0.0.1"}))
 			})
 		})
 	})
