@@ -15,7 +15,7 @@ func NewCommand(packageManager npm.PackageManager) *Command {
 	}
 }
 
-func (command *Command) Run(request Request) (Response, error) {
+func (command *Command) Run(request Request) ([]resource.Version, error) {
 	out, err := command.packageManager.View(
 		request.Source.PackageName,
 		request.Source.Registry,
