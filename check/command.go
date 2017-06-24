@@ -21,7 +21,7 @@ func (command *Command) Run(request Request) ([]resource.Version, error) {
 		request.Source.Registry,
 	)
 	if err != nil {
-		return Response{}, err
+		return []resource.Version{}, err
 	}
 
 	return []resource.Version{
