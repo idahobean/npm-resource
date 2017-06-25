@@ -1,5 +1,7 @@
 # NPM Resource
 
+[![](https://images.microbadger.com/badges/image/idahobean/npm-resource:0.0.1.svg)](https://microbadger.com/images/idahobean/npm-resource:0.0.1 "Get your own image badge on microbadger.com")  
+
 A Concourse resource to manage a npm package.
 
 ## Source Configuration
