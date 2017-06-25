@@ -17,7 +17,7 @@ Checks for new version of specified `package_name` from `registry`.
 
 #### Parameters
 
-*There is nothing at the moment.*
+*There is nothing at the moment.*  
 The assumed use case in `in` is cache npm package into private registry.
 
 ### `out`: Publish npm package to registry.
