@@ -85,7 +85,7 @@ var _ = Describe("Check", func() {
 
 				Eventually(session, "15s").Should(gexec.Exit(0))
 
-				var response check.Response
+				var response []resource.Version
 				err = json.Unmarshal(session.Out.Contents(), &response)
 				Ω(err).ShouldNot(HaveOccurred())
 
