@@ -1,4 +1,4 @@
-# [WIP]NPM Resource
+# NPM Resource
 
 A Concourse resource to manage a npm package.
 
@@ -18,6 +18,7 @@ Checks for new version of specified `package_name` from `registry`.
 #### Parameters
 
 *There is nothing at the moment.*
+The assumed use case in `in` is cache npm package into private registry.
 
 ### `out`: Publish npm package to registry.
 
@@ -49,7 +50,7 @@ resources:
     type: npm-resource
     source:
       package_name: sample-node
-      registry: http://registry.private.npm/
+      registry: http://registry.private.npm
 
 jobs:
 - name: job-publish-package
