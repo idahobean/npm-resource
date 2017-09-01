@@ -27,7 +27,11 @@ func (npm *NPM) Login(userName string, password string, email string, registry s
 		args = append(args, "-r", registry)
 	}
 
-	return exec.Command("npm-cli-login", args...).Run()
+	cmd := exec.Command("npm-cli-login", args...)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+
+	return cmd.Run()
 }
 
 func (npm *NPM) Logout(registry string) error {
@@ -37,7 +41,11 @@ func (npm *NPM) Logout(registry string) error {
 		args = append(args, "--registry", registry)
 	}
 
-	return exec.Command("npm", args...).Run()
+	cmd := exec.Command("npm", args...)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+
+	return cmd.Run()
 }
 
 func (npm *NPM) View(packageName string, registry string) (*PackageInfo, error) {
@@ -47,7 +55,9 @@ func (npm *NPM) View(packageName string, registry string) (*PackageInfo, error) 
 		args = append(args, "--registry", registry)
 	}
 
-	out, err := exec.Command("npm", args...).Output()
+	cmd := exec.Command("npm", args...)
+	cmd.Stderr = os.Stderr
+	out, err := cmd.Output()
 	if err != nil {
 		return &PackageInfo{}, err
 	}
@@ -72,7 +82,11 @@ func (npm *NPM) Install(packageName string, registry string) error {
 		args = append(args, "--registry", registry)
 	}
 
-	return exec.Command("npm", args...).Run()
+	cmd := exec.Command("npm", args...)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+
+	return cmd.Run()
 }
 
 func (npm *NPM) Publish(path string, tag string, registry string) error {
@@ -85,5 +99,9 @@ func (npm *NPM) Publish(path string, tag string, registry string) error {
 		args = append(args, "--registry", registry)
 	}
 
-	return exec.Command("npm", args...).Run()
+	cmd := exec.Command("npm", args...)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+
+	return cmd.Run()
 }
