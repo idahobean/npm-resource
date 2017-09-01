@@ -1,6 +1,7 @@
 package npm
 
 import (
+	"os"
 	"os/exec"
 
 	simpleJson "github.com/bitly/go-simplejson"
