@@ -42,11 +42,7 @@ func (npm *NPM) Logout(registry string) error {
 		args = append(args, "--registry", registry)
 	}
 
-	cmd := exec.Command("npm", args...)
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-
-	return cmd.Run()
+	return npm.npm(args...).Run()
 }
 
 func (npm *NPM) View(packageName string, registry string) (*PackageInfo, error) {
@@ -83,11 +79,7 @@ func (npm *NPM) Install(packageName string, registry string) error {
 		args = append(args, "--registry", registry)
 	}
 
-	cmd := exec.Command("npm", args...)
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-
-	return cmd.Run()
+	return npm.npm(args...).Run()
 }
 
 func (npm *NPM) Publish(path string, tag string, registry string) error {
@@ -100,9 +92,13 @@ func (npm *NPM) Publish(path string, tag string, registry string) error {
 		args = append(args, "--registry", registry)
 	}
 
+	return npm.npm(args...).Run()
+}
+
+func (npm *NPM) npm(args ...string) *exec.Cmd {
 	cmd := exec.Command("npm", args...)
-	cmd.Stdout = os.Stdout
+	cmd.Stdout = os.Stderr
 	cmd.Stderr = os.Stderr
 
-	return cmd.Run()
+	return cmd
 }
