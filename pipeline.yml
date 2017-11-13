@@ -23,7 +23,7 @@ resources:
   type: git
   source:
     uri: https://github.com/idahobean/npm-resource.git
-    branch: stdout
+    branch: master
 
 - name: sample-node
   type: git
@@ -38,7 +38,6 @@ resources:
     email: {{docker-email}}
     password: {{docker-password}}
     repository: idahobean/npm-resource
-    tag: stdout
 
 - name: npm-resource-base-image
   type: docker-image
